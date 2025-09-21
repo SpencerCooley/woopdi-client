@@ -1,0 +1,19 @@
+// Dark theme specific styles
+[data-theme="dark"] {
+  body {
+    background-color: var(--background-dark);
+    color: var(--text-dark);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1e1e1e;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #333;
+
+    &:hover {
+      background: #444;
+    }
+  }
+} 

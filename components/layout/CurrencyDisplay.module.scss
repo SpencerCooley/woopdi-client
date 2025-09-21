@@ -1,0 +1,24 @@
+.currencyContainer {
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  background-color: #e8f5e9;
+  text-align: center;
+  border: 1px solid #a5d6a7;
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+}
+
+.amount {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #1b5e20;
+}
+
+.label {
+  font-size: 0.8em;
+  color: #388e3c;
+}

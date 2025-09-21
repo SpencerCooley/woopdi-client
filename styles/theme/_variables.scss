@@ -1,0 +1,15 @@
+// Theme variables
+:root {
+  // Light theme
+  --background-light: #f5f5f5;
+  --text-light: #1a1a1a;
+  
+  // Dark theme
+  --background-dark: #121212;
+  --text-dark: #ffffff;
+  
+  // Common
+  --max-width: 1100px;
+  --border-radius: 12px;
+  --font-mono: var(--font-geist-mono);
+} 

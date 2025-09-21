@@ -1,0 +1,19 @@
+// Light theme specific styles
+[data-theme="light"] {
+  body {
+    background-color: var(--background-light);
+    color: var(--text-light);
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+
+    &:hover {
+      background: #666;
+    }
+  }
+} 

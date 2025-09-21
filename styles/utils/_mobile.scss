@@ -1,0 +1,6 @@
+// Mobile-specific utilities
+@media (hover: none) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+} 
