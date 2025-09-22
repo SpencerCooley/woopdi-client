@@ -200,10 +200,6 @@ export default function ImageGenDemo() {
         console.log('WebSocket closed. Code:', event.code, 'Reason:', event.reason);
         setConnectionStatus('disconnected');
 
-        // Only show error if it wasn't a normal close
-        if (event.code !== 1000 && event.code !== 1001) {
-          setError(`WebSocket closed unexpectedly (Code: ${event.code})`);
-        }
 
         setIsRunning(false);
       };
