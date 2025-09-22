@@ -3,6 +3,7 @@
 import { Box, Typography, useTheme } from '@mui/material';
 import { useState, useEffect, useRef } from 'react';
 import { toolService, assetService } from '@/services/api';
+import AssetGallery from './AssetGallery';
 import {
   TextField,
   Button,
@@ -11,10 +12,9 @@ import {
   CardHeader,
   Chip,
   Alert,
-  Grid,
   Paper
 } from '@mui/material';
-import AssetGallery from './AssetGallery';
+
 
 interface TaskUpdate {
   task_id: string;
@@ -44,6 +44,8 @@ interface Asset {
   meta: any;
 }
 
+
+
 export default function ImageGenDemo() {
   const [promptInput, setPromptInput] = useState<string>('A futuristic city skyline at sunset');
   const [taskId, setTaskId] = useState<string | null>(null);
@@ -54,6 +56,7 @@ export default function ImageGenDemo() {
   const [imageResult, setImageResult] = useState<ImageResult | null>(null);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [assetsLoading, setAssetsLoading] = useState<boolean>(false);
+
   const wsRef = useRef<WebSocket | null>(null);
   const theme = useTheme();
 
@@ -268,21 +271,21 @@ export default function ImageGenDemo() {
   }, [imageResult]);
 
   return (
-    <Box sx={{ p: 3, maxWidth: '1400px', mx: 'auto' }}>
-      <Typography variant="h4" gutterBottom color="text.primary">
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h4" gutterBottom>
         AI Image Generation Demo
       </Typography>
 
-      <Grid container spacing={3}>
-        {/* Left side - Form (1/3 width) */}
-        <Grid item xs={12} md={4}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+        {/* Left side - Form */}
+        <Box sx={{ flex: { xs: 'none', md: 1 } }}>
           <Card sx={{ mb: 3 }}>
             <CardHeader
               title="Generate Image"
               subheader="A demo app showcasing AI model integration, database storage, and real-time progress updates via Celery tasks and WebSocket connections. The celery task can be found in the api tasks as generate_image_with_logo_task.py"
             />
             <CardContent>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%' }}>
                 <TextField
                   label="Prompt"
                   value={promptInput}
@@ -300,7 +303,7 @@ export default function ImageGenDemo() {
                 >
                   {isRunning ? 'Generating...' : 'Generate Image'}
                 </Button>
-              </form>
+              </Box>
 
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle1" gutterBottom>
@@ -327,10 +330,10 @@ export default function ImageGenDemo() {
               )}
             </CardContent>
           </Card>
-        </Grid>
+        </Box>
 
-        {/* Right side - Progress and Result (2/3 width) */}
-        <Grid item xs={12} md={8}>
+        {/* Right side - Progress and Result */}
+        <Box sx={{ flex: 1 }}>
           {/* Show progress only when no image result */}
           {!imageResult && (
             <Card sx={{ mb: 3 }}>
@@ -406,7 +409,8 @@ export default function ImageGenDemo() {
                     alt="Generated"
                     style={{
                       width: '100%',
-                      maxWidth: '500px',
+                      maxWidth: '100%',
+                      height: 'auto',
                       borderRadius: '8px',
                       display: 'block',
                       margin: '0 auto',
@@ -426,16 +430,16 @@ export default function ImageGenDemo() {
                     <Typography variant="h6" gutterBottom>
                       Asset Details
                     </Typography>
-                    <Grid container spacing={2}>
-                      <Grid item xs={6}>
+                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                      <Box sx={{ flex: '1 1 200px' }}>
                         <Typography variant="body2" color="text.secondary">
                           <strong>Asset ID:</strong>
                         </Typography>
                         <Typography variant="body1">
                           {imageResult.asset_id}
                         </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
+                      </Box>
+                      <Box sx={{ flex: '1 1 200px' }}>
                         <Typography variant="body2" color="text.secondary">
                           <strong>Status:</strong>
                         </Typography>
@@ -444,53 +448,55 @@ export default function ImageGenDemo() {
                           color={imageResult.status === 'completed' ? 'success' : 'default'}
                           size="small"
                         />
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="body2" color="text.secondary">
-                          <strong>Filename:</strong>
-                        </Typography>
-                        <Typography variant="body1" sx={{ wordBreak: 'break-all' }}>
-                          {imageResult.filename}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="body2" color="text.secondary">
-                          <strong>Image URL:</strong>
-                        </Typography>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            wordBreak: 'break-all',
-                            color: theme.palette.primary.main,
-                            '&:hover': { textDecoration: 'underline', cursor: 'pointer' }
-                          }}
-                          onClick={() => window.open(imageResult.public_url, '_blank')}
-                        >
-                          {imageResult.public_url}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Typography variant="body2" color="text.secondary">
-                          <strong>Message:</strong>
-                        </Typography>
-                        <Typography variant="body1">
-                          {imageResult.message}
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                      </Box>
+                    </Box>
+                    <Box sx={{ mt: 2 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        <strong>Filename:</strong>
+                      </Typography>
+                      <Typography variant="body1" sx={{ wordBreak: 'break-all' }}>
+                        {imageResult.filename}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ mt: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        <strong>Image URL:</strong>
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          wordBreak: 'break-all',
+                          color: theme.palette.primary.main,
+                          '&:hover': { textDecoration: 'underline', cursor: 'pointer' }
+                        }}
+                        onClick={() => window.open(imageResult.public_url, '_blank')}
+                      >
+                        {imageResult.public_url}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ mt: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        <strong>Message:</strong>
+                      </Typography>
+                      <Typography variant="body1">
+                        {imageResult.message}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Paper>
               </CardContent>
             </Card>
           )}
-        </Grid>
-      </Grid>
+        </Box>
+
+      </Box>
 
       {/* Asset Gallery */}
       <AssetGallery
         assets={assets}
         loading={assetsLoading}
       />
+
     </Box>
   );
 }

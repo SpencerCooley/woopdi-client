@@ -8,6 +8,7 @@ import UserManagement from './UserManagement';
 import OrganizationUserManagement from './OrganizationUserManagement';
 import SystemUserManagement from './SystemUserManagement';
 import ToolsDemo from './ToolsDemo';
+import ImageGenDemo from './ImageGenDemo';
 
 interface WorkSpaceProps {
   title?: string;
@@ -24,6 +25,7 @@ export default function WorkSpace({ title }: WorkSpaceProps) {
   const isOrganizationUserManagementPage = title === 'Organization User Management';
   const isSystemUserManagementPage = title === 'System User Management';
   const isToolsDemoPage = title === 'Tools Demo';
+  const isImageGenDemoPage = title === 'Image Generation Demo';
   
   return (
     <Box sx={{
@@ -60,6 +62,7 @@ export default function WorkSpace({ title }: WorkSpaceProps) {
         {isOrganizationUserManagementPage && <OrganizationUserManagement />}
         {isSystemUserManagementPage && <SystemUserManagement />}
         {isToolsDemoPage && <ToolsDemo />}
+        {isImageGenDemoPage && <ImageGenDemo />}
 
       </Paper>
       

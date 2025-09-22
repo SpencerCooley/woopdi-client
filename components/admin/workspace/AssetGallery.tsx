@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Typography, Card, CardContent, CardHeader, Grid, Paper } from '@mui/material';
+import { Box, Typography, Card, CardContent, CardHeader, Paper } from '@mui/material';
 
 interface Asset {
   id: number;
@@ -37,12 +37,12 @@ export default function AssetGallery({
   };
 
   return (
-    <Card sx={{ mt: 4 }}>
+    <Card sx={{ mt: 4, width: '100%' }}>
       <CardHeader
         title={title}
         subheader={subheader || `All your AI-generated images with logo overlay (${assets.length} assets)`}
       />
-      <CardContent>
+      <CardContent sx={{ width: '100%' }}>
         {loading ? (
           <Typography>Loading assets...</Typography>
         ) : assets.length === 0 ? (
@@ -50,37 +50,46 @@ export default function AssetGallery({
             No AI-generated images yet. Generate your first image above!
           </Typography>
         ) : (
-          <Grid container spacing={2}>
+          <Box sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: 2,
+            width: '100%'
+          }}>
             {assets.map((asset) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={asset.id}>
-                <Paper
-                  sx={{
-                    p: 2,
-                    cursor: 'pointer',
-                    '&:hover': {
-                      boxShadow: 3,
-                      transform: 'translateY(-2px)',
-                      transition: 'all 0.2s ease-in-out'
-                    }
+              <Paper
+                key={asset.id}
+                sx={{
+                  flex: '1 1 200px',
+                  maxWidth: '250px',
+                  minWidth: '150px',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    boxShadow: 3,
+                    transform: 'translateY(-2px)',
+                    transition: 'all 0.2s ease-in-out'
+                  }
+                }}
+                onClick={() => handleAssetClick(asset)}
+              >
+                <img
+                  src={asset.public_url}
+                  alt={asset.filename}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    maxHeight: '200px',
+                    objectFit: 'cover',
+                    borderRadius: '8px 8px 0 0',
+                    display: 'block'
                   }}
-                  onClick={() => handleAssetClick(asset)}
-                >
-                  <img
-                    src={asset.public_url}
-                    alt={asset.filename}
-                    style={{
-                      width: '100%',
-                      height: '200px',
-                      objectFit: 'cover',
-                      borderRadius: '8px',
-                      marginBottom: '12px'
-                    }}
-                    onError={(e) => {
-                      console.error('Gallery image failed to load:', asset.public_url);
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                  <Typography variant="body2" noWrap>
+                  onError={(e) => {
+                    console.error('Gallery image failed to load:', asset.public_url);
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+                <Box sx={{ p: 2 }}>
+                  <Typography variant="body2" sx={{ wordBreak: 'break-all', mb: 1 }}>
                     <strong>{asset.filename}</strong>
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
@@ -93,18 +102,16 @@ export default function AssetGallery({
                       sx={{
                         display: 'block',
                         mt: 1,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap'
+                        wordBreak: 'break-word'
                       }}
                     >
                       "{asset.meta.prompt}"
                     </Typography>
                   )}
-                </Paper>
-              </Grid>
+                </Box>
+              </Paper>
             ))}
-          </Grid>
+          </Box>
         )}
       </CardContent>
     </Card>

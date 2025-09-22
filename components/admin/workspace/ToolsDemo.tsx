@@ -177,9 +177,9 @@ const connectWebSocket = (taskId: string) => {
         Streaming demo using websockets
       </Typography>
       
-      <Box sx={{ display: 'flex', gap: 3 }}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
         {/* Left side - Form */}
-        <Box sx={{ flex: 1 }}>
+        <Box sx={{ flex: { xs: 'none', md: 1 } }}>
           <p>The request is made and a celery task is initialized. we subscribe to the updates using webscokets and push the updates to a react compoonent. This app does nothing and will just process for however many seconds you specify. The celery task is called example_streaming_task.py in the api app.</p>
           <br/>
           <Card sx={{ mb: 3 }}>

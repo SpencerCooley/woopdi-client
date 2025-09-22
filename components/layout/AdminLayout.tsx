@@ -67,7 +67,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       <TopBar onMenuClick={handleDrawerToggle} isMobile={isMobile} />
 
       {/* Left Sidebar */}
-      <LeftSidebar 
+      <LeftSidebar
         width={SIDEBAR_WIDTH}
         mobileOpen={mobileOpen}
         onClose={() => setMobileOpen(false)}
@@ -92,10 +92,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
       >
         {/* This toolbar is for spacing below the fixed AppBar */}
         <Toolbar />
-        
+
         {/* Page Content */}
-        <Box sx={{ 
+        <Box sx={{
           width: '100%',
+          maxWidth: '1400px',
+          mx: 'auto',
         }}>
           {children}
         </Box>
