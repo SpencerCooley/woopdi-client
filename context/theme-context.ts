@@ -17,7 +17,7 @@ export { mintCreamTheme, mintCreamDarkTheme } from '../themes';
 // Simple theme selector - just import the theme you want to use
 export const themeSettings = (mode: 'light' | 'dark'): ThemeOptions => {
   // Return the appropriate theme based on mode
-  return mode === 'light' ? midnightGlowTheme : midnightGlowDarkTheme;
+  return mode === 'light' ? hackerBuzzTheme : hackerBuzzDarkTheme;
 };
 
 export type ThemeContextType = {

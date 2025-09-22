@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { 
+import {
   Box,
   TextField,
   Button,
@@ -14,6 +14,7 @@ import { useApp } from '../../context/app-context';
 import { authService } from '../../services/api';
 import { useRouter } from 'next/navigation';
 import { useTheme as useAppTheme } from '../../context/theme-context';
+import { useLogo } from '../../hooks/useLogo';
 
 export default function LoginForm() {
   const theme = useTheme();
@@ -23,6 +24,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
+  const { currentLogoUrl, hasLogo } = useLogo();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,23 +65,23 @@ export default function LoginForm() {
             width: '100%',
           }}
         >
-          <Box sx={{ mb: 3 }}>
-            <Box sx={{ position: 'relative', zIndex: 1 }}>
-              <Image
-                src={appTheme.mode === 'dark' 
-                  ? '/company-logo-light-low.png' 
-                  : '/company-logo-dark-low.png'}
-                alt="VitalCare Logo"
-                width={300}
-                height={90}
-                priority
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto'
-                }}
-              />
+          {hasLogo && (
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ position: 'relative', zIndex: 1 }}>
+                <Image
+                  src={currentLogoUrl!}
+                  alt="Company Logo"
+                  width={300}
+                  height={90}
+                  priority
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto'
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -138,4 +140,4 @@ export default function LoginForm() {
       </Box>
     </Container>
   );
-} 
+}

@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { authService } from '../../services/api';
 import { useTheme as useAppTheme } from '../../context/theme-context';
+import { useLogo } from '../../hooks/useLogo';
 
 export default function RequestPasswordResetPage() {
   const theme = useTheme();
@@ -21,6 +22,7 @@ export default function RequestPasswordResetPage() {
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
+  const { currentLogoUrl, hasLogo } = useLogo();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,21 +62,21 @@ export default function RequestPasswordResetPage() {
             width: '100%',
           }}
         >
-          <Box sx={{ mb: 3 }}>
-            <Image
-              src={appTheme.mode === 'dark' 
-                ? '/company-logo-light-low.png' 
-                : '/company-logo-dark-low.png'}
-              alt="Woopdi Logo"
-              width={300}
-              height={90}
-              priority
-              style={{
-                maxWidth: '100%',
-                height: 'auto'
-              }}
-            />
-          </Box>
+          {hasLogo && (
+            <Box sx={{ mb: 3 }}>
+              <Image
+                src={currentLogoUrl!}
+                alt="Company Logo"
+                width={300}
+                height={90}
+                priority
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto'
+                }}
+              />
+            </Box>
+          )}
           <Typography component="h1" variant="h5">
             Reset Password
           </Typography>

@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { userService } from '../../services/api';
 import { useTheme as useAppTheme } from '../../context/theme-context';
+import { useLogo } from '../../hooks/useLogo';
 
 export default function SignupForm() {
   const theme = useTheme();
@@ -29,6 +30,7 @@ export default function SignupForm() {
     confirmPassword: '',
     form: '',
   });
+  const { currentLogoUrl, hasLogo } = useLogo();
 
   const validate = () => {
     const newErrors = { email: '', password: '', confirmPassword: '', form: '' };
@@ -128,23 +130,23 @@ export default function SignupForm() {
             width: '100%',
           }}
         >
-          <Box sx={{ mb: 3 }}>
-            <Box sx={{ position: 'relative', zIndex: 1 }}>
-              <Image
-                src={appTheme.mode === 'dark' 
-                  ? '/company-logo-light-low.png' 
-                  : '/company-logo-dark-low.png'}
-                alt="Woopdi Logo"
-                width={300}
-                height={90}
-                priority
-                style={{
-                  maxWidth: '100%',
-                  height: 'auto'
-                }}
-              />
+          {hasLogo && (
+            <Box sx={{ mb: 3 }}>
+              <Box sx={{ position: 'relative', zIndex: 1 }}>
+                <Image
+                  src={currentLogoUrl!}
+                  alt="Company Logo"
+                  width={300}
+                  height={90}
+                  priority
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto'
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>

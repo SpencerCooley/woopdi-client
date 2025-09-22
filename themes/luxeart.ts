@@ -14,7 +14,7 @@ export const luxeartTheme: ThemeOptions = {
       dark: '#a08649',
     },
     background: {
-      default: '#fefcf7',
+      default: '#c2bcabff',
       paper: '#ffffff',
     },
     text: {

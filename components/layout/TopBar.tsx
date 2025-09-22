@@ -24,6 +24,7 @@ import { useApp } from '../../context/app-context';
 import { useRouter } from 'next/navigation';
 import { useTheme as useAppTheme } from '../../context/theme-context';
 import { useState } from 'react';
+import { useLogo } from '../../hooks/useLogo';
 
 interface TopBarProps {
   onMenuClick: () => void;
@@ -37,6 +38,7 @@ export default function TopBar({ onMenuClick, isMobile }: TopBarProps) {
   const router = useRouter();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { currentLogoUrl, hasLogo, loading: logoLoading } = useLogo();
 
   const handleLogout = () => {
     logout();
@@ -82,27 +84,27 @@ export default function TopBar({ onMenuClick, isMobile }: TopBarProps) {
           gap: 2,
           flexGrow: 1 
         }}>
-          <Box sx={{ 
-            position: 'relative',
-            width: 120,
-            height: 40,
-            display: 'flex',
-            alignItems: 'center'
-          }}>
-            <Image
-              src={appTheme.mode === 'dark' 
-                ? '/company-logo-light-low.png' 
-                : '/company-logo-dark-low.png'}
-              alt="Company Logo"
-              width={120}
-              height={40}
-              priority
-              style={{
-                maxWidth: '100%',
-                height: 'auto'
-              }}
-            />
-          </Box>
+          {hasLogo && (
+            <Box sx={{
+              position: 'relative',
+              width: 120,
+              height: 40,
+              display: 'flex',
+              alignItems: 'center'
+            }}>
+              <Image
+                src={currentLogoUrl!}
+                alt="Company Logo"
+                width={120}
+                height={40}
+                priority
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto'
+                }}
+              />
+            </Box>
+          )}
           
           {/* Organization Context Indicator */}
           {selectedOrganization && (

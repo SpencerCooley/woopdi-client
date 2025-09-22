@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { authService } from '../../services/api';
 import { useTheme as useAppTheme } from '../../context/theme-context';
+import { useLogo } from '../../hooks/useLogo';
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
@@ -27,9 +28,10 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { currentLogoUrl, hasLogo } = useLogo();
 
   useEffect(() => {
-    const resetToken = searchParams.get('token');
+    const resetToken = searchParams?.get('token');
     if (resetToken) {
       setToken(resetToken);
     }
@@ -81,21 +83,21 @@ export default function ResetPasswordPage() {
             width: '100%',
           }}
         >
-          <Box sx={{ mb: 3 }}>
-            <Image
-              src={appTheme.mode === 'dark' 
-                ? '/company-logo-light-low.png' 
-                : '/company-logo-dark-low.png'}
-              alt="Woopdi Logo"
-              width={300}
-              height={90}
-              priority
-              style={{
-                maxWidth: '100%',
-                height: 'auto'
-              }}
-            />
-          </Box>
+          {hasLogo && (
+            <Box sx={{ mb: 3 }}>
+              <Image
+                src={currentLogoUrl!}
+                alt="Company Logo"
+                width={300}
+                height={90}
+                priority
+                style={{
+                  maxWidth: '100%',
+                  height: 'auto'
+                }}
+              />
+            </Box>
+          )}
           <Typography component="h1" variant="h5">
             Reset Your Password
           </Typography>

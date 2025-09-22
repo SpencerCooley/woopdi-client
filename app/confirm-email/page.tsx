@@ -8,6 +8,7 @@ import { useApp } from '../../context/app-context';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useTheme as useAppTheme } from '../../context/theme-context';
+import { useLogo } from '../../hooks/useLogo';
 
 export default function ConfirmEmailPage() {
   const router = useRouter();
@@ -20,8 +21,9 @@ export default function ConfirmEmailPage() {
   const [showResend, setShowResend] = useState(false);
   const [resendMessage, setResendMessage] = useState('');
   const [autoCreateFreeSubscription, setAutoCreateFreeSubscription] = useState(true);
+  const { currentLogoUrl, hasLogo } = useLogo();
 
-  const getToken = useCallback(() => searchParams.get('token'), [searchParams]);
+  const getToken = useCallback(() => searchParams?.get('token'), [searchParams]);
 
   const handleResend = async () => {
     const token = getToken();
@@ -122,21 +124,21 @@ export default function ConfirmEmailPage() {
           textAlign: 'center',
         }}
       >
-        <Box sx={{ mb: 3, position: 'relative' }}>
-          <Image
-            src={appTheme.mode === 'dark' 
-              ? '/company-logo-light-low.png' 
-              : '/company-logo-dark-low.png'}
-            alt="Woopdi Logo"
-            width={300}
-            height={90}
-            priority
-            style={{
-              maxWidth: '100%',
-              height: 'auto'
-            }}
-          />
-        </Box>
+        {hasLogo && (
+          <Box sx={{ mb: 3, position: 'relative' }}>
+            <Image
+              src={currentLogoUrl!}
+              alt="Company Logo"
+              width={300}
+              height={90}
+              priority
+              style={{
+                maxWidth: '100%',
+                height: 'auto'
+              }}
+            />
+          </Box>
+        )}
         
         {loading && (
           <>

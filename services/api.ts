@@ -41,6 +41,8 @@ export interface CreateUser {
 
 export interface SystemSettings {
   auto_create_free_subscription: boolean;
+  branding_logo_light_mode?: string;
+  branding_logo_dark_mode?: string;
 }
 
 // Types for organization membership management
